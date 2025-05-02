@@ -4,10 +4,7 @@ import { v4 } from 'uuid'
 
 import type { CollectionConfig } from 'payload'
 
-import { HTML } from '@/blocks/html/schema'
-import { Image } from '@/blocks/image/schema'
 import { RichText } from '@/blocks/richText/schema'
-import { Deck } from '@/blocks/deck/schema'
 
 dotenv.config()
 dotenv.config({ path: '.env' })
@@ -44,7 +41,7 @@ export const Pages: CollectionConfig = {
   },
   admin: {
     listSearchableFields: ['title', 'id'],
-    defaultColumns: ['title', 'author', 'categories', 'status'],
+    defaultColumns: ['title', 'user'],
     livePreview: {
       url: ({ data }) => {
         return getPath(data.slug)
@@ -74,37 +71,6 @@ export const Pages: CollectionConfig = {
   },
   fields: [
     {
-      name: 'id',
-      type: 'text',
-      required: true,
-      admin: {
-        readOnly: true,
-        position: 'sidebar',
-      },
-    },
-    {
-      name: 'parentId',
-      label: 'Parent id',
-      type: 'text',
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
-      name: 'legacyId',
-      type: 'number',
-      admin: {
-        hidden: true,
-      },
-    },
-    {
-      name: 'legacyParentId',
-      type: 'number',
-      admin: {
-        hidden: true,
-      },
-    },
-    {
       name: 'createdAt',
       label: 'Created At',
       type: 'date',
@@ -131,63 +97,15 @@ export const Pages: CollectionConfig = {
       },
     },
     {
-      name: 'template',
-      label: 'Template',
-      type: 'relationship',
-      relationTo: 'templates',
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
-      name: 'author',
-      label: 'Author',
-      type: 'relationship',
-      relationTo: 'authors',
-      admin: {
-        readOnly: true,
-        position: 'sidebar',
-      },
-    },
-    {
-      name: 'status',
-      label: 'Status',
-      type: 'relationship',
-      relationTo: 'statuses',
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
-      name: 'categories',
-      label: 'Categories',
-      type: 'relationship',
-      relationTo: 'categories',
-      hasMany: true,
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
       name: 'title',
       label: 'Title',
-      type: 'text',
-    },
-    {
-      name: 'excerpt',
-      label: 'Excerpt',
-      type: 'text',
-    },
-    {
-      name: 'description',
-      label: 'Description',
       type: 'text',
     },
     {
       name: 'content',
       label: 'Content',
       type: 'blocks',
-      blocks: [Deck, Image, RichText, HTML],
+      blocks: [RichText],
     },
   ],
 }

@@ -1,5 +1,3 @@
-import './styles/main.scss'
-
 import { Open_Sans } from 'next/font/google'
 
 import { RefreshRouteOnSave } from './(components)/RefreshRouteOnSave'

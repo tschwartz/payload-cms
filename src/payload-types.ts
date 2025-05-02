@@ -67,13 +67,8 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    authors: Author;
     users: User;
     pages: Page;
-    categories: Category;
-    media: Media;
-    statuses: Status;
-    templates: Template;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -81,13 +76,8 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    authors: AuthorsSelect<false> | AuthorsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
-    categories: CategoriesSelect<false> | CategoriesSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
-    statuses: StatusesSelect<false> | StatusesSelect<true>;
-    templates: TemplatesSelect<false> | TemplatesSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -96,14 +86,8 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  globals: {
-    header: Header;
-    footer: Footer;
-  };
-  globalsSelect: {
-    header: HeaderSelect<false> | HeaderSelect<true>;
-    footer: FooterSelect<false> | FooterSelect<true>;
-  };
+  globals: {};
+  globalsSelect: {};
   locale: null;
   user: User & {
     collection: 'users';
@@ -139,20 +123,6 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "authors".
- */
-export interface Author {
-  id: string;
-  login: string;
-  email: string;
-  displayName: string;
-  firstName?: string | null;
-  lastName?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -173,139 +143,34 @@ export interface User {
  * via the `definition` "pages".
  */
 export interface Page {
-  id: string;
-  parentId?: string | null;
-  legacyId?: number | null;
-  legacyParentId?: number | null;
+  id: number;
   createdAt: string;
   updatedAt: string;
   slug?: string | null;
-  template?: (string | null) | Template;
-  author?: (string | null) | Author;
-  status?: (string | null) | Status;
-  categories?: (string | Category)[] | null;
   title?: string | null;
-  excerpt?: string | null;
-  description?: string | null;
   content?:
-    | (
-        | {
-            alignment?: ('yes' | 'no') | null;
-            deck?:
-              | {
-                  title?: string | null;
-                  richText?: {
-                    root: {
-                      type: string;
-                      children: {
-                        type: string;
-                        version: number;
-                        [k: string]: unknown;
-                      }[];
-                      direction: ('ltr' | 'rtl') | null;
-                      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                      indent: number;
-                      version: number;
-                    };
-                    [k: string]: unknown;
-                  } | null;
-                  cta?: {
-                    text?: string | null;
-                    url?: string | null;
-                  };
-                  id?: string | null;
-                  blockName?: string | null;
-                  blockType: 'card';
-                }[]
-              | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'deck';
-          }
-        | {
-            image?: (number | null) | Media;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'image';
-          }
-        | {
-            richText?: {
-              root: {
-                type: string;
-                children: {
-                  type: string;
-                  version: number;
-                  [k: string]: unknown;
-                }[];
-                direction: ('ltr' | 'rtl') | null;
-                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-                indent: number;
-                version: number;
-              };
+    | {
+        richText?: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
               [k: string]: unknown;
-            } | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'richText';
-          }
-        | {
-            html?: string | null;
-            id?: string | null;
-            blockName?: string | null;
-            blockType: 'html';
-          }
-      )[]
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'richText';
+      }[]
     | null;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "templates".
- */
-export interface Template {
-  id: string;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "statuses".
- */
-export interface Status {
-  id: string;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: string;
-  name: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -407,32 +272,12 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'authors';
-        value: string | Author;
-      } | null)
-    | ({
         relationTo: 'users';
         value: string | User;
       } | null)
     | ({
         relationTo: 'pages';
-        value: string | Page;
-      } | null)
-    | ({
-        relationTo: 'categories';
-        value: string | Category;
-      } | null)
-    | ({
-        relationTo: 'media';
-        value: number | Media;
-      } | null)
-    | ({
-        relationTo: 'statuses';
-        value: string | Status;
-      } | null)
-    | ({
-        relationTo: 'templates';
-        value: string | Template;
+        value: number | Page;
       } | null)
     | ({
         relationTo: 'payload-jobs';
@@ -482,20 +327,6 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "authors_select".
- */
-export interface AuthorsSelect<T extends boolean = true> {
-  id?: T;
-  login?: T;
-  email?: T;
-  displayName?: T;
-  firstName?: T;
-  lastName?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -515,55 +346,13 @@ export interface UsersSelect<T extends boolean = true> {
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
-  id?: T;
-  parentId?: T;
-  legacyId?: T;
-  legacyParentId?: T;
   createdAt?: T;
   updatedAt?: T;
   slug?: T;
-  template?: T;
-  author?: T;
-  status?: T;
-  categories?: T;
   title?: T;
-  excerpt?: T;
-  description?: T;
   content?:
     | T
     | {
-        deck?:
-          | T
-          | {
-              alignment?: T;
-              deck?:
-                | T
-                | {
-                    card?:
-                      | T
-                      | {
-                          title?: T;
-                          richText?: T;
-                          cta?:
-                            | T
-                            | {
-                                text?: T;
-                                url?: T;
-                              };
-                          id?: T;
-                          blockName?: T;
-                        };
-                  };
-              id?: T;
-              blockName?: T;
-            };
-        image?:
-          | T
-          | {
-              image?: T;
-              id?: T;
-              blockName?: T;
-            };
         richText?:
           | T
           | {
@@ -571,63 +360,8 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
-        html?:
-          | T
-          | {
-              html?: T;
-              id?: T;
-              blockName?: T;
-            };
       };
   _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories_select".
- */
-export interface CategoriesSelect<T extends boolean = true> {
-  id?: T;
-  name?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "statuses_select".
- */
-export interface StatusesSelect<T extends boolean = true> {
-  id?: T;
-  name?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "templates_select".
- */
-export interface TemplatesSelect<T extends boolean = true> {
-  id?: T;
-  name?: T;
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -694,74 +428,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header".
- */
-export interface Header {
-  id: number;
-  name: string;
-  navigationItems?:
-    | {
-        label: string;
-        link: string;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer".
- */
-export interface Footer {
-  id: number;
-  name: string;
-  navigationItems?:
-    | {
-        label: string;
-        link: string;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "header_select".
- */
-export interface HeaderSelect<T extends boolean = true> {
-  name?: T;
-  navigationItems?:
-    | T
-    | {
-        label?: T;
-        link?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "footer_select".
- */
-export interface FooterSelect<T extends boolean = true> {
-  name?: T;
-  navigationItems?:
-    | T
-    | {
-        label?: T;
-        link?: T;
-        id?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "TaskSchedulePublish".
  */
 export interface TaskSchedulePublish {
@@ -770,7 +436,7 @@ export interface TaskSchedulePublish {
     locale?: string | null;
     doc?: {
       relationTo: 'pages';
-      value: string | Page;
+      value: number | Page;
     } | null;
     global?: string | null;
     user?: (string | null) | User;

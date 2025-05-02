@@ -15,43 +15,27 @@
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
   },
   "dependencies": {
-    "@lexical/headless": "^0.28.0",
-    "@lexical/html": "^0.28.0",
-    "@lexical/list": "^0.28.0",
-    "@lexical/selection": "^0.28.0",
-    "@lexical/table": "^0.28.0",
-    "@lexical/utils": "^0.28.0",
     "@payloadcms/db-sqlite": "^3.35.1",
     "@payloadcms/live-preview-react": "^3.35.1",
     "@payloadcms/next": "^3.35.1",
     "@payloadcms/richtext-lexical": "^3.35.1",
-    "bootstrap": "^4.6.2",
     "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
     "graphql": "^16.8.1",
-    "lexical": "^0.28.0",
     "next": "^15.2.4",
     "payload": "^3.35.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "sharp": "^0.32.6",
     "uuid": "^11.0.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
-    "@types/jsdom": "^21.1.7",
     "@types/node": "^22.5.4",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.1",
-    "@wordpress/block-serialization-default-parser": "^5.16.0",
     "autoprefixer": "^10.4.20",
-    "cheerio": "^1.0.0",
     "eslint": "^9.16.0",
     "eslint-config-next": "^15.1.0",
-    "fast-xml-parser": "^4.5.1",
-    "jsdom": "^26.0.0",
-    "mime": "^4.0.6",
-    "nodemon": "^3.1.9",
     "postcss": "^8.5.1",
     "prettier": "^3.4.2",
     "tailwindcss": "^3.4.17",
@@ -59,5 +43,6 @@
   },
   "engines": {
     "node": "^18.20.2 || >=20.9.0"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
