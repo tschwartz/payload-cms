@@ -4,6 +4,7 @@ import { v4 } from 'uuid'
 
 import type { CollectionConfig } from 'payload'
 
+import { Alert } from '@/blocks/alert/schema'
 import { RichText } from '@/blocks/richText/schema'
 
 dotenv.config()
@@ -97,6 +98,18 @@ export const Pages: CollectionConfig = {
       },
     },
     {
+      name: 'template',
+      type: 'select',
+      defaultValue: 'default',
+      options: [
+        { label: 'Default', value: 'default' },
+        { label: 'Home', value: 'home' },
+      ],
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'title',
       label: 'Title',
       type: 'text',
@@ -105,7 +118,19 @@ export const Pages: CollectionConfig = {
       name: 'content',
       label: 'Content',
       type: 'blocks',
-      blocks: [RichText],
+      blocks: [RichText, Alert],
+      filterOptions({ siblingData }: { siblingData: unknown }) {
+        const data = siblingData as Record<string, unknown> | undefined
+
+        switch (data?.template) {
+          case 'home':
+            return ['alert', 'richText']
+
+          case 'default':
+          default:
+            return ['richText']
+        }
+      },
     },
   ],
 }
