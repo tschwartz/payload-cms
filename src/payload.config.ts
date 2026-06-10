@@ -5,6 +5,12 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 
+import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
+import {
+  publicationWorkflowsPlugin,
+  ReviewWorkflowStep,
+} from '@payloadcms/plugin-publication-workflows'
+
 import { Pages } from './collections/pages/schema'
 import { Users } from './collections/users/schema'
 
@@ -29,5 +35,24 @@ export default buildConfig({
       url: process.env.DATABASE_URI || '',
     },
   }),
-  plugins: [],
+  plugins: [
+    nestedDocsPlugin({
+      collections: ['pages'],
+      generateLabel: (_docs, doc: any) => doc?.title || '',
+      generateURL: (docs: any[]) =>
+        docs.reduce<string>((url, d) => `${url}${d?.slug ? `/${d.slug}` : ''}`, '') || '/',
+    }),
+    publicationWorkflowsPlugin({
+      collections: {
+        pages: {
+          steps: [
+            new ReviewWorkflowStep({
+              name: 'review',
+              label: 'Review',
+            }),
+          ],
+        },
+      },
+    }),
+  ],
 })

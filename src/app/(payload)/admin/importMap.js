@@ -1,3 +1,6 @@
+import { ReviewStepIndicator as ReviewStepIndicator_26b0bbe8fb99ff4f8f52b5772000760e } from '@payloadcms/plugin-publication-workflows/client'
+import { DocStatusCell as DocStatusCell_26b0bbe8fb99ff4f8f52b5772000760e } from '@payloadcms/plugin-publication-workflows/client'
+import { PublicationStatus as PublicationStatus_26b0bbe8fb99ff4f8f52b5772000760e } from '@payloadcms/plugin-publication-workflows/client'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { LexicalDiffComponent as LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -21,9 +24,16 @@ import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93
 import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
+import { CustomPublishButton as CustomPublishButton_26b0bbe8fb99ff4f8f52b5772000760e } from '@payloadcms/plugin-publication-workflows/client'
+import { ReviewStepActions as ReviewStepActions_26b0bbe8fb99ff4f8f52b5772000760e } from '@payloadcms/plugin-publication-workflows/client'
+import { ReviewStepStatusTableCell as ReviewStepStatusTableCell_26b0bbe8fb99ff4f8f52b5772000760e } from '@payloadcms/plugin-publication-workflows/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
+/** @type import('payload').ImportMap */
 export const importMap = {
+  "@payloadcms/plugin-publication-workflows/client#ReviewStepIndicator": ReviewStepIndicator_26b0bbe8fb99ff4f8f52b5772000760e,
+  "@payloadcms/plugin-publication-workflows/client#DocStatusCell": DocStatusCell_26b0bbe8fb99ff4f8f52b5772000760e,
+  "@payloadcms/plugin-publication-workflows/client#PublicationStatus": PublicationStatus_26b0bbe8fb99ff4f8f52b5772000760e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#LexicalDiffComponent": LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -47,5 +57,8 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#UnderlineFeatureClient": UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
+  "@payloadcms/plugin-publication-workflows/client#CustomPublishButton": CustomPublishButton_26b0bbe8fb99ff4f8f52b5772000760e,
+  "@payloadcms/plugin-publication-workflows/client#ReviewStepActions": ReviewStepActions_26b0bbe8fb99ff4f8f52b5772000760e,
+  "@payloadcms/plugin-publication-workflows/client#ReviewStepStatusTableCell": ReviewStepStatusTableCell_26b0bbe8fb99ff4f8f52b5772000760e,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

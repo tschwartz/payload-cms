@@ -7,6 +7,18 @@
  */
 
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WorkflowStep".
+ */
+export type WorkflowStep =
+  | {
+      step: 'review' | 'readyToPublish';
+      enteredOn: string;
+      complete?: boolean | null;
+      id?: string | null;
+    }[]
+  | null;
+/**
  * Supported timezones in IANA format.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -69,6 +81,8 @@ export interface Config {
   collections: {
     users: User;
     pages: Page;
+    reviews: Review;
+    workflows: Workflow;
     'payload-kv': PayloadKv;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
@@ -79,6 +93,8 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     pages: PagesSelect<false> | PagesSelect<true>;
+    reviews: ReviewsSelect<false> | ReviewsSelect<true>;
+    workflows: WorkflowsSelect<false> | WorkflowsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -130,7 +146,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: string;
+  id: number;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -206,7 +222,55 @@ export interface Page {
           }
       )[]
     | null;
+  parent?: (number | null) | Page;
+  breadcrumbs?:
+    | {
+        doc?: (number | null) | Page;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: number;
+  feedback?:
+    | {
+        topic: string;
+        id?: string | null;
+      }[]
+    | null;
+  relatedDoc: {
+    relationTo: 'pages';
+    value: number | Page;
+  };
+  requestedBy: {
+    relationTo: 'users';
+    value: number | User;
+  };
+  status?: ('awaitingRequest' | 'awaitingReview' | 'changesRequested' | 'approved') | null;
+  type: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "workflows".
+ */
+export interface Workflow {
+  id: number;
+  doc: {
+    relationTo: 'pages';
+    value: number | Page;
+  };
+  steps?: WorkflowStep;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -326,16 +390,24 @@ export interface PayloadLockedDocument {
   document?:
     | ({
         relationTo: 'users';
-        value: string | User;
+        value: number | User;
       } | null)
     | ({
         relationTo: 'pages';
         value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'reviews';
+        value: number | Review;
+      } | null)
+    | ({
+        relationTo: 'workflows';
+        value: number | Workflow;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -348,7 +420,7 @@ export interface PayloadPreference {
   id: number;
   user: {
     relationTo: 'users';
-    value: string | User;
+    value: number | User;
   };
   key?: string | null;
   value?:
@@ -379,7 +451,6 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  id?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -426,7 +497,54 @@ export interface PagesSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
+  parent?: T;
+  breadcrumbs?:
+    | T
+    | {
+        doc?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews_select".
+ */
+export interface ReviewsSelect<T extends boolean = true> {
+  feedback?:
+    | T
+    | {
+        topic?: T;
+        id?: T;
+      };
+  relatedDoc?: T;
+  requestedBy?: T;
+  status?: T;
+  type?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "workflows_select".
+ */
+export interface WorkflowsSelect<T extends boolean = true> {
+  doc?: T;
+  steps?: T | WorkflowStepSelect<T>;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WorkflowStep_select".
+ */
+export interface WorkflowStepSelect<T extends boolean = true> {
+  step?: T;
+  enteredOn?: T;
+  complete?: T;
+  id?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -522,7 +640,7 @@ export interface TaskSchedulePublish {
       value: number | Page;
     } | null;
     global?: string | null;
-    user?: (string | null) | User;
+    user?: (number | null) | User;
   };
   output?: unknown;
 }

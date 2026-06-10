@@ -1,7 +1,5 @@
 import dotenv from 'dotenv'
 
-import { v4 } from 'uuid'
-
 import type { CollectionConfig } from 'payload'
 
 import { Alert } from '@/blocks/alert/schema'
@@ -51,16 +49,6 @@ export const Pages: CollectionConfig = {
     preview: (data) => {
       return getPath(data.slug as string)
     },
-  },
-  hooks: {
-    beforeValidate: [
-      ({ data }) => {
-        if (!data?.id) {
-          return { ...data, id: v4() }
-        }
-        return data
-      },
-    ],
   },
   versions: {
     drafts: {
